@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,15 @@ public class Player : MonoBehaviour
 
     private Vector2 direction = Vector2.zero;
 
+    public Vector2 homeLocation = Vector2.zero;
+
+    public int hitIconsCount = 0;
+    public SpawnManager SpawnManager;
+
     // Start is called before the first frame update
     private void Start()
     {
+        transform.position = homeLocation;
 
     }
 
@@ -20,8 +27,6 @@ public class Player : MonoBehaviour
         CheckInput();
 
         Move();
-
-        UpdateOrientation();
     }
 
     private void CheckInput()
@@ -47,6 +52,27 @@ public class Player : MonoBehaviour
     private void Move()
     {
         transform.localPosition += (Vector3)direction * speed * Time.deltaTime;
+    }
+
+    public void AddScore()
+    {
+        hitIconsCount += 1;
+
+        if (hitIconsCount == 8)
+        {
+            SpawnManager.noMoreIcons = true;
+
+            Debug.Log("noMoreIcons: " + SpawnManager.noMoreIcons);
+
+            hitIconsCount = 0;
+        }
+
+
+        //add point
+
+        //check if need to respawn things
+
+        //display score
     }
 
     //// CODE BASED ON MOVING TUTORIAL --Incomplete
